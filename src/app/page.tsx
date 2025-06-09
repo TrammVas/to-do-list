@@ -25,25 +25,31 @@ export default function Home() {
     
   return (
     <>
-    <div className="grid grid-rows-[20px_1fr_20px]  justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="grid grid-rows-[20px_1fr_20px] pt-8 justify-items-center min-h-screen  gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div className="text-4xl" >TO DO LIST </div>
-      <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
+      <main className=" flex flex-col gap-[16px] row-start-2 items-center sm:items-start">
 
 
         <div className="flex gap-4 items-center flex-col sm:flex-row">
           <form onSubmit={inputSubmit}>
-          <input type="textarea" value={note} onChange={inputChange} placeholder="hi" className="bg-gray-300 w-[40vw]"></input>
+          <input type="textarea" value={note} onChange={inputChange} placeholder="hi" className="bg-gray-300 w-[40vw] py-2 px-4 rounded"></input>
           <button className="bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded w-[20vw]" type="submit">Add task</button>          
           </form>
         </div>
-        <ul className="">
-        {noteArray.map((note, index) => (
-          <li key={index} className="bg-gray-300 w-[60vw] flex items-center">
+      
+        {noteArray.map((note, i) => (
+            <ul className="flex items-center">
+          <li key={i} className="bg-gray-300 py-2 px-4  w-[70vw] lg:w-[40vw] rounded">
             {note}
-            <button className="ml-auto bg-red-600 hover:bg-red-900 text-white font-semibold py-2 px-4 rounded ml-auto w-[20vw]" onClick={() => handleDelete(index)}>Delete</button>
+            
           </li>
+          <div className="w-[30vw] lg:w-[20vw]">
+            <button className="ml-auto bg-green-600 hover:bg-green-900 text-white font-semibold py-2 px-4 rounded ml-auto w-[15vw] lg:w-[10vw]  center h-1/2" onClick={() => handleDelete(i)}>Done</button>
+            <button className="ml-auto bg-red-600 hover:bg-red-900 text-white font-semibold py-2 px-4 rounded ml-auto w-[15vw] lg:w-[10vw] center h-1/2" onClick={() => handleDelete(i)}>Delete</button>
+          </div>
+         </ul>
         ))}
-      </ul>
+     
       </main>
       <footer className="row-start-3 flex gap-[24px] flex-wrap items-center justify-center">
         
