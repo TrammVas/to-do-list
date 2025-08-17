@@ -2,23 +2,36 @@
 import { use, useState } from "react";
 
 function Todo ({nArray, value , handleDelete}:{nArray:string [] , value : string,handleDelete: (index: number) => void } ){
-  const [bgColor, setBgColor] = useState('bg-gray-300');
+  const [bgColor, setBgColor] = useState<string[]>(['bg-gray-300']);
   
-  const changeColor = () => {
-    // Toggle between blue and red
-    setBgColor(bgColor === 'bg-gray-300' ? 'bg-green-400' : 'bg-gray-300');
+  const changeColor = (i:number) => {
+    // Toggle between gray and green
+    setBgColor(prev => {
+  const newColors = [...prev];
+  newColors[i] = newColors[i] === 'bg-gray-300' ? 'bg-green-400' : 'bg-gray-300';
+  return newColors;
+  });
+  // bgColor[i] === 'bg-gray-300' ? 'bg-green-400' : 'bg-gray-300');
   };
-  const handleButtonClick = (index:number) => {
 
+  const handleButtonClick = (index:number) => {
+    // Reset colour to gray and delete the note
+    setBgColor(prev => {
+    const newColors = [...prev];
+    newColors[index] = 'bg-gray-300';
+    return newColors;
+    });
     handleDelete(index);
+    
+   
   };
   return(
     <ul className="flex flex-col items-center">
         {nArray.map((value, i) => (
-          <li key={i} className={`${bgColor} py-2 px-4  w-[90vw] lg:w-[60vw] rounded`}>
+          <li key={i} className={`${bgColor[i]} bg-gray-300  py-2 px-4  w-[90vw] lg:w-[60vw] rounded`}>
             {value}
             <div className="w-[30vw] lg:w-[20vw]">
-            <button className="ml-auto bg-green-600 hover:bg-green-900 text-white font-semibold py-2 px-4 rounded ml-auto w-[15vw] lg:w-[10vw]  center h-1/2" onClick={()=>changeColor()}>Done</button>
+            <button className="ml-auto bg-green-600 hover:bg-green-900 text-white font-semibold py-2 px-4 rounded ml-auto w-[15vw] lg:w-[10vw]  center h-1/2" onClick={()=>changeColor(i)}>Done</button>
             <button className="ml-auto bg-red-600 hover:bg-red-900 text-white font-semibold py-2 px-4 rounded ml-auto w-[15vw] lg:w-[10vw] center h-1/2" onClick={() => handleButtonClick(i)}>Delete</button>
           </div>
           </li>
